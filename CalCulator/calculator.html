@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        .calculator {
+            width: 30%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #a59e9e97;
+        }
+        .calculator input[type="text"] {
+            width: 71%;
+            height: 40px;
+            margin-bottom: 10px;
+            font-size: 18px;
+            padding: 5px;
+            cursor: text;
+            column-width: 1pc;
+        }
+        .calculator button {
+            width: 100px;
+            height: 50px;
+            font-size: 18px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: whitesmoke;
+            background-color: black;
+        }
+        .btn-ac{
+            color: whitesmoke;
+            background-color: rgb(10, 115, 115)!important;
+        }
+        .btn-ac_1{
+            background-color: rgb(89, 98, 98) !important;
+        }
+        #result {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="result" disabled>
+        <button class="btn-ac" onclick="clearResult()">AC</button>
+        <button id="arange_1" onclick="appendToResult('9')">9</button>
+        <button id="arange_1" onclick="appendToResult('8')">8</button>
+        <button id="arange_1" onclick="appendToResult('7')">7</button>
+        <button class="btn-ac_1" onclick="performOperation('/')">/</button>
+        <button id="arange_1" onclick="appendToResult('4')">4</button>
+        <button id="arange_1" onclick="appendToResult('5')">5</button>
+        <button id="arange_1" onclick="appendToResult('6')">6</button>
+        <button class="btn-ac_1" onclick="performOperation('*')">*</button>
+        <button id="arange_1" onclick="appendToResult('1')">1</button>
+        <button id="arange_1" onclick="appendToResult('2')">2</button>
+        <button id="arange_1" onclick="appendToResult('3')">3</button>
+        <button class="btn-ac_1" onclick="performOperation('-')">-</button>
+        <button id="arange_1" onclick="appendToResult('.')">.</button>
+        <button id="arange_1" onclick="appendToResult('0')">0</button>
+        <button id="arange_1" onclick="calculateResult()">=</button>
+        <button class="btn-ac_1" onclick="performOperation('+')">+</button>
+    </div>
+
+    <script>
+        let currentResult = '';
+        let currentOperation = '';
+        let previousResult = '';
+
+        function appendToResult(value) {
+            currentResult += value;
+            document.getElementById('result').value = currentResult;
+        }
+
+        function clearResult() {
+            currentResult = '';
+            document.getElementById('result').value = '';
+        }
+
+        function performOperation(operation) {
+            currentOperation = operation;
+            previousResult = currentResult;
+            currentResult = '';
+        }
+
+        function calculateResult() {
+            let num1 = parseFloat(previousResult);
+            let num2 = parseFloat(currentResult);
+            switch (currentOperation) {
+                case '+':
+                    currentResult = (num1 + num2).toString();
+                    break;
+                case '-':
+                    currentResult = (num1 - num2).toString();
+                    break;
+                case '*':
+                    currentResult = (num1 * num2).toString();
+                    break;
+                case '/':
+                    if (num2 === 0) {
+                        currentResult = 'Error';
+                    } else {
+                        currentResult = (num1 / num2).toString();
+                    }
+                    break;
+                case '%':
+                    currentResult = ((num1 / num2) * 100).toString();
+            }
+            document.getElementById('result').value = currentResult;
+            currentOperation = '';
+            previousResult = '';
+        }
+    </script>
+</body>
+</html>
